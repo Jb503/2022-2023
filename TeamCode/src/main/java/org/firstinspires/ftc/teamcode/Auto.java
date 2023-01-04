@@ -144,6 +144,7 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     Forward(5);
+                    strafeRight(5);
                 }
                 else{ //right
 
@@ -263,6 +264,28 @@ public class Auto extends LinearOpMode {
         frontleft.setPower(0.5);
         frontright.setPower(0.5);
         sleep((long) (inches*(1000 / 19.2 )));
+        backleft.setPower(0);
+        backright.setPower(0);
+        frontleft.setPower(0);
+        frontright.setPower(0);
+    }
+    public void Backward(long inches) {
+        backleft.setPower(-0.5);
+        backright.setPower(-0.5);
+        frontleft.setPower(-0.5);
+        frontright.setPower(-0.5);
+        sleep((long) (inches*(1000 / 19.2 )));
+        backleft.setPower(0);
+        backright.setPower(0);
+        frontleft.setPower(0);
+        frontright.setPower(0);
+    }
+    public void strafeRight(long inches) {
+        backleft.setPower(-0.5);
+        backright.setPower(0.5);
+        frontleft.setPower(0.5);
+        frontright.setPower(-0.5);
+        sleep((long) (inches*(1000/15.1)));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
