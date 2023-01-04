@@ -57,10 +57,10 @@ public class DriveCode extends LinearOpMode {
                 armmotor.setPower(armdown - armup);
                 // You can change the position numbers
                 // Based on what you want the servo to do.
-                if (gamepad1.a) {
+                if (gamepad1.left_bumper) {
                     Claw.setPosition(0.85);
                 }
-                if (gamepad1.b) {
+                if (gamepad1.right_bumper) {
                     Claw.setPosition(1);
                 }
                 telemetry.update();

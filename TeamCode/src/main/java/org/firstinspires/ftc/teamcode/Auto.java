@@ -134,17 +134,22 @@ public class Auto extends LinearOpMode {
         tfod.activate();
         // Enable following block to zoom in on target.
         tfod.setZoom(1.5, 16 / 9);
-        telemetry.addData("DS preview on/off", "3 dots, Ca==mera Stream");
+        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
+
         // Wait for start command from Driver Station.
         waitForStart();
         if (opModeIsActive()) {
             Stop_and_reset();
             if (team == 0){ //red
                 if (side==0){ //left
-                    Forward(5);
-                    strafeRight(5);
+                    //Forward(53);
+                    //strafeLeft(12);
+                    //Forward(4);
+                    armmotor.setPower(1);
+                    sleep(3000);
+                    armmotor.setPower(1);
                 }
                 else{ //right
 
@@ -249,8 +254,6 @@ public class Auto extends LinearOpMode {
         armmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-
-
     public void Arm_Run() {
         armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armmotor.setPower(0);
@@ -258,11 +261,12 @@ public class Auto extends LinearOpMode {
         }
         Arm_Reset();
     }
+
     public void Forward(long inches) {
-        backleft.setPower(0.5);
-        backright.setPower(0.5);
-        frontleft.setPower(0.5);
-        frontright.setPower(0.5);
+        backleft.setPower(1);
+        backright.setPower(.9);
+        frontleft.setPower(1);
+        frontright.setPower(.9);
         sleep((long) (inches*(1000 / 19.2 )));
         backleft.setPower(0);
         backright.setPower(0);
@@ -281,15 +285,30 @@ public class Auto extends LinearOpMode {
         frontright.setPower(0);
     }
     public void strafeRight(long inches) {
-        backleft.setPower(-0.5);
-        backright.setPower(0.5);
-        frontleft.setPower(0.5);
-        frontright.setPower(-0.5);
+        backleft.setPower(-1);
+        backright.setPower(1);
+        frontleft.setPower(1);
+        frontright.setPower(-1);
         sleep((long) (inches*(1000/15.1)));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
         frontright.setPower(0);
+    }
+    public void strafeLeft(long inches) {
+        backleft.setPower(.8);
+        backright.setPower(-1);
+        frontleft.setPower(-1);
+        frontright.setPower(.8);
+        sleep((long) (inches * (1000 / 15.1)));
+        backleft.setPower(0);
+        backright.setPower(0);
+        frontleft.setPower(0);
+        frontright.setPower(0);
+    }
+    public void armUp(long inches) {
+        armmotor.setPower(1);
+        sleep((long) (inches*(1000/0)));
     }
 
 //    public int inToTicks(double distance_in) {
