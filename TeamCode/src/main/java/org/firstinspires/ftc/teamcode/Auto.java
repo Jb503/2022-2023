@@ -141,11 +141,11 @@ public class Auto extends LinearOpMode {
         // Wait for start command from Driver Station.
         waitForStart();
         if (opModeIsActive()) {
-            Stop_and_reset();
+            //Stop_and_reset();
             if (team == 0){ //red
                 if (side==0){ //left
                     //Forward(53);
-                    //strafeLeft(12);
+                    //strafeRight(12);
                     //Forward(4);
                     armmotor.setPower(1);
                     sleep(3000);
@@ -263,11 +263,11 @@ public class Auto extends LinearOpMode {
     }
 
     public void Forward(long inches) {
-        backleft.setPower(1);
-        backright.setPower(.9);
-        frontleft.setPower(1);
-        frontright.setPower(.9);
-        sleep((long) (inches*(1000 / 19.2 )));
+        backleft.setPower(.5);
+        backright.setPower(.5);
+        frontleft.setPower(.5);
+        frontright.setPower(.5);
+        sleep((long) (inches*(1000 / 19.2 )*2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
@@ -278,37 +278,37 @@ public class Auto extends LinearOpMode {
         backright.setPower(-0.5);
         frontleft.setPower(-0.5);
         frontright.setPower(-0.5);
-        sleep((long) (inches*(1000 / 19.2 )));
+        sleep((long) (inches*(1000 / 19.2 )*2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
         frontright.setPower(0);
     }
     public void strafeRight(long inches) {
-        backleft.setPower(-1);
-        backright.setPower(1);
-        frontleft.setPower(1);
-        frontright.setPower(-1);
-        sleep((long) (inches*(1000/15.1)));
+        backleft.setPower(-.5);
+        backright.setPower(.5);
+        frontleft.setPower(.5);
+        frontright.setPower(-.5);
+        sleep((long) (inches*(1000/15.1)*2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
         frontright.setPower(0);
     }
     public void strafeLeft(long inches) {
-        backleft.setPower(.8);
-        backright.setPower(-1);
-        frontleft.setPower(-1);
-        frontright.setPower(.8);
-        sleep((long) (inches * (1000 / 15.1)));
+        backleft.setPower(.5);
+        backright.setPower(-.5);
+        frontleft.setPower(-.5);
+        frontright.setPower(.5);
+        sleep((long) (inches * (1000 / 15.1)*2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
         frontright.setPower(0);
     }
     public void armUp(long inches) {
-        armmotor.setPower(1);
-        sleep((long) (inches*(1000/0)));
+        armmotor.setPower(.5);
+        sleep((long) (inches*(1000/12)*2));
     }
 
 //    public int inToTicks(double distance_in) {
