@@ -50,10 +50,10 @@ public class DriveCode extends LinearOpMode {
                 denominator = JavaUtil.maxOfList(JavaUtil.createListWith(JavaUtil.sumOfList(JavaUtil.createListWith(Math.abs(y), Math.abs(x), Math.abs(rx))), null, 1));
                 // Creates levels of speed based on how far the
                 // joysticks are from the center (orgin... or 0,0)
-                backleft.setPower((y + x + rx) / denominator);
-                backright.setPower(((y - x) + rx) / denominator);
-                frontleft.setPower(((y + x) - rx) / denominator);
-                frontright.setPower(((y - x) - rx) / denominator);
+                backleft.setPower((y - x + rx) / denominator);
+                backright.setPower(((y + x) + rx) / denominator);
+                frontleft.setPower(((y - x) - rx) / denominator);
+                frontright.setPower(((y + x) - rx) / denominator);
                 armmotor.setPower(armdown - armup);
                 // You can change the position numbers
                 // Based on what you want the servo to do.

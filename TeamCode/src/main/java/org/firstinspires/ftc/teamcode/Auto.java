@@ -146,13 +146,15 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     Claw.setPosition(0.85);
-                    Forward(50);
+                    Forward(45);
                     strafeRight(12);
                     Forward(4);
                     armUp(32.5);
                     Claw.setPosition(1);
-                    sleep(1000);
-                    armDown(3);
+                    sleep(500);
+                    Backward(4);
+                    strafeLeft(12);
+                    armDown(40);
                 }
                 else{ //right
 
@@ -262,7 +264,7 @@ public class Auto extends LinearOpMode {
         armmotor.setPower(0);
         while (armmotor.isBusy() && opModeIsActive()) {
         }
-        Arm_Reset();
+        //Arm_Reset();
     }
 
     public void Forward(long inches) {
@@ -270,7 +272,7 @@ public class Auto extends LinearOpMode {
         backright.setPower(.75);
         frontleft.setPower(.75);
         frontright.setPower(.75);
-        sleep((long) ((inches*(1000 / 19.2 )*2)/(2/3)));
+        sleep((long) ((inches*(1000 / 19.2 )*3)/2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
@@ -281,17 +283,17 @@ public class Auto extends LinearOpMode {
         backright.setPower(-0.75);
         frontleft.setPower(-0.75);
         frontright.setPower(-0.75);
-        sleep((long) (inches*(1000 / 19.2 )*2));
+        sleep((long) ((inches*(1000 / 19.2 )*3)/2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
         frontright.setPower(0);
     }
     public void strafeRight(long inches) {
-        backleft.setPower(-.75);
-        backright.setPower(.75);
-        frontleft.setPower(.75);
-        frontright.setPower(-.75);
+        backleft.setPower(-.7);
+        backright.setPower(.7);
+        frontleft.setPower(.7);
+        frontright.setPower(-.7);
         sleep((long) (inches*(1000/15.1)*2));
         backleft.setPower(0);
         backright.setPower(0);
@@ -299,11 +301,11 @@ public class Auto extends LinearOpMode {
         frontright.setPower(0);
     }
     public void strafeLeft(long inches) {
-        backleft.setPower(.75);
-        backright.setPower(-.75);
-        frontleft.setPower(-.75);
-        frontright.setPower(.75);
-        sleep((long) (inches * (1000 / 15.1)*2));
+        backleft.setPower(.7);
+        backright.setPower(-.7);
+        frontleft.setPower(-.7);
+        frontright.setPower(.7);
+        sleep((long) (inches*(1000/15.1)*2));
         backleft.setPower(0);
         backright.setPower(0);
         frontleft.setPower(0);
@@ -316,7 +318,7 @@ public class Auto extends LinearOpMode {
     }
     public void armDown(double inches) {
         armmotor.setPower(-.75);
-        sleep((long) (inches*(1000/9.2)*1.5));
+        sleep((long) (inches*(1000/9.2)));
         armmotor.setPower(0);
     }
 
