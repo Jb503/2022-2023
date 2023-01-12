@@ -145,30 +145,92 @@ public class Auto extends LinearOpMode {
             //Stop_and_reset();
             if (team == 0){ //red
                 if (side==0){ //left
-                    Claw.setPosition(0.85);
-                    Forward(45);
-                    strafeRight(12);
-                    Forward(4);
-                    armUp(32.5);
-                    Claw.setPosition(1);
-                    sleep(500);
-                    Backward(4);
-                    strafeLeft(12);
-                    armDown(40);
+                    if (recognition.getLabel().equals("1Dot")) {
+                        Left();
+                        strafeLeft(25);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("2Dots")) {
+                        Left();
+                        strafeLeft(10);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("3Dots")) {
+                        Left();
+                        strafeRight(10);
+                        armDown(38);
+
+                    } else {
+                        telemetry.update();
+                    }
+
                 }
                 else{ //right
+                    if (recognition.getLabel().equals("1Dot")) {
+                        Right();
+                        strafeLeft(25);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("2Dots")) {
+                        Right();
+                        strafeLeft(10);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("3Dots")) {
+                        Right();
+                        strafeRight(10);
+                        armDown(38);
+
+                    } else {
+                        telemetry.update();
+                    }
 
                 }
             }
             else if (team==1){ //blue
                 if(side==0){ //left
+                    if (recognition.getLabel().equals("1Dot")) {
+                        Left();
+                        strafeLeft(25);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("2Dots")) {
+                        Left();
+                        strafeLeft(10);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("3Dots")) {
+                        Left();
+                        strafeRight(10);
+                        armDown(38);
+
+                    } else {
+                        telemetry.update();
+                    }
 
                 }
                 else{ //right
+                    if (recognition.getLabel().equals("1Dot")) {
+                        Right();
+                        strafeLeft(25);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("2Dots")) {
+                        Right();
+                        strafeLeft(10);
+                        armDown(38);
+
+                    } else if (recognition.getLabel().equals("3Dots")) {
+                        Right();
+                        strafeRight(10);
+                        armDown(38);
+
+                    } else {
+                        telemetry.update();
+                    }
 
                 }
             }
-            // Put run blocks here.
             while (opModeIsActive()) {
                 // Put loop blocks here.
                 // Get a list of recognitions from TFOD.
@@ -193,7 +255,7 @@ public class Auto extends LinearOpMode {
                     // Goes to the purple Action function
                     // So that I can separate based on
                     // The task the robot is doing
-                    Actions();
+                    //Actions();
                 }
                 telemetry.update();
             }
@@ -220,18 +282,12 @@ public class Auto extends LinearOpMode {
 
     }
 
-    /**
-     * Describe this function...
-     */
     public void displayInfo(int i) {
         // Display the location of the top left corner
         // of the detection boundary for the recognition
         telemetry.addData("Label: " + recognition.getLabel() + ", Confidence: " + recognition.getConfidence(), "X: " + Math.round(JavaUtil.averageOfList(JavaUtil.createListWith(Double.parseDouble(JavaUtil.formatNumber(recognition.getLeft(), 0)), Double.parseDouble(JavaUtil.formatNumber(recognition.getRight(), 0))))) + ", Y: " + Math.round(JavaUtil.averageOfList(JavaUtil.createListWith(Double.parseDouble(JavaUtil.formatNumber(recognition.getTop(), 0)), Double.parseDouble(JavaUtil.formatNumber(recognition.getBottom(), 0))))));
     }
 
-    /**
-     * Describe this function...
-     */
     public void Score() {
         // forward
         // strafe right
@@ -311,6 +367,17 @@ public class Auto extends LinearOpMode {
         frontleft.setPower(0);
         frontright.setPower(0);
     }
+    public void turnRight(long degrees){
+        backleft.setPower(.7);
+        backright.setPower(-.7);
+        frontleft.setPower(-.7);
+        frontright.setPower(.7);
+        sleep((long) (degrees*(1000/15.1)*2));
+        backleft.setPower(0);
+        backright.setPower(0);
+        frontleft.setPower(0);
+        frontright.setPower(0);
+    }
     public void armUp(double inches) {
         armmotor.setPower(.75);
         sleep((long) (inches*(1000/9.2)*1.5));
@@ -321,6 +388,28 @@ public class Auto extends LinearOpMode {
         sleep((long) (inches*(1000/9.2)));
         armmotor.setPower(0);
     }
+
+    public void Left(){
+        Claw.setPosition(0.85);
+        Forward(45);
+        strafeRight(12);
+        Forward(4);
+        armUp(32.5);
+        Claw.setPosition(1);
+        sleep(500);
+        Backward(6);
+    }
+    public void Right(){
+        Claw.setPosition(0.85);
+        Forward(45);
+        strafeLeft(12);
+        Forward(4);
+        armUp(32.5);
+        Claw.setPosition(1);
+        sleep(500);
+        Backward(6);
+    }
+    
 
 //    public int inToTicks(double distance_in) {
 //        double doubleticks = distance_in * (1120/(3.89827 * 3.14));
