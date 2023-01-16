@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -14,6 +16,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaCurrentGame;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.Tfod;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name = "Auto", preselectTeleOp = "TeleOp")
 public class Auto extends LinearOpMode {
@@ -32,15 +38,55 @@ public class Auto extends LinearOpMode {
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
+    OpenCvCamera camera;
+    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+
+    static final double FEET_PER_METER = 3.28084;
+
+    // Lens intrinsics
+    // UNITS ARE PIXELS
+    // NOTE: this calibration is for the C920 webcam at 800x448.
+    // You will need to do your own calibration for other configurations!
+    double fx = 1430;
+    double fy = 1430;
+    double cx = 480;
+    double cy = 620;
+
+    // UNITS ARE METERS
+    double tagsize = 0.0381; // 1.5 inches
+
+    int ID_TAG_OF_INTEREST  = 4; // Tag ID 1 from the 36h11 family
+    int ID_TAG_OF_INTEREST2 = 5; // Tag ID 2 from the 36h11 family
+    int ID_TAG_OF_INTEREST3 = 6; // Tag ID 3 from the 36h11 family
+
+    AprilTagDetection tagOfInterest = null;
+
     @Override
     public void runOpMode() {
-        List<Recognition> recognitions;
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+
+        camera.setPipeline(aprilTagDetectionPipeline);
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                camera.startStreaming(1280, 960, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+
+            }
+        });
+
+        telemetry.setMsTransmissionInterval(50);
+
         int index;
         int inToTicks = 119;
         int team = 0;
         int side = 0;
-        vuforiaPOWERPLAY = new VuforiaCurrentGame();
-        tfod = new Tfod();
+        int autoParkPosition = 0;
         frontleft = hardwareMap.get(DcMotorEx.class, "front left");
         backleft = hardwareMap.get(DcMotorEx.class, "back left");
         backright = hardwareMap.get(DcMotorEx.class, "back right");
@@ -90,72 +136,71 @@ public class Auto extends LinearOpMode {
                 team=1;
                 side=1;
             }
+            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+
+            if (currentDetections.size() != 0) {
+                boolean tagFound = false;
+
+                for (AprilTagDetection tag : currentDetections) {
+                    if (tag.id == ID_TAG_OF_INTEREST) {
+                        autoParkPosition = 0;
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }
+                    if (tag.id == ID_TAG_OF_INTEREST2) {
+                        autoParkPosition = 1;
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }
+                    if (tag.id == ID_TAG_OF_INTEREST3) {
+                        autoParkPosition = 2;
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }
+                }=
+                if (tagFound) {
+                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    tagToTelemetry(tagOfInterest);
+                } else {
+                    telemetry.addLine("Don't see tag of interest :(");
+                    if (tagOfInterest == null) {
+                        telemetry.addLine("(The tag has never been seen)");
+                    } else {
+                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                        tagToTelemetry(tagOfInterest);
+                    }
+                }
+            }
+            //Gets inputs before init for gui
+            telemetry.addData("Detected: ", autoParkPosition);
         }
 
-        // Sample TFOD Op Mode using a Custom Model
-        // The following block uses a webcam.
-        vuforiaPOWERPLAY.initialize(
-                "", // vuforiaLicenseKey
-                hardwareMap.get(WebcamName.class, "Webcam 1"), // cameraName
-                "", // webcamCalibrationFilename
-                false, // useExtendedTracking
-                false, // enableCameraMonitoring
-                VuforiaLocalizer.Parameters.CameraMonitorFeedback.NONE, // cameraMonitorFeedback
-                0, // dx
-                0, // dy
-                0, // dz
-                AxesOrder.XZY, // axesOrder
-                90, // firstAngle
-                90, // secondAngle
-                0, // thirdAngle
-                true); // useCompetitionFieldTargetLocations
-        // Initialize TFOD before waitForStart.
-        // Use the Manage page to upload your custom model.
-        // In the next block, replace
-        // YourCustomModel.tflite with the name of your
-        // custom model.
-        // Set isModelTensorFlow2 to true if you used a TensorFlow
-        // 2 tool, such as ftc-ml, to create the model.
-        //
-        // Set isModelQuantized to true if the model is
-        // quantized. Models created with ftc-ml are quantized.
-        //
-        // Set inputSize to the image size corresponding to the model.
-        // If your model is based on SSD MobileNet v2
-        // 320x320, the image size is 300 (srsly!).
-        // If your model is based on SSD MobileNet V2 FPNLite 320x320, the image size is 320.
-        // If your model is based on SSD MobileNet V1 FPN 640x640 or
-        // SSD MobileNet V2 FPNLite 640x640, the image size is 640.
-        tfod.useModelFromFile("model_20221201_133353.tflite", JavaUtil.createListWith("1Dot", "2Dots", "3Dots"), true, true, 300);
-        // If the robot isn't detecting/detecting something
-        // that isn't there, then play with minConfidence
-        // Lower=false positives, Higher=false negatives
-        tfod.initialize(vuforiaPOWERPLAY, (float) 0.7, true, true);
-        tfod.setClippingMargins(0, 80, 0, 0);
-        tfod.activate();
-        // Enable following block to zoom in on target.
-        tfod.setZoom(1.5, 16 / 9);
+
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
 
         // Wait for start command from Driver Station.
         waitForStart();
+        camera.stopStreaming();
         if (opModeIsActive()) {
             //Stop_and_reset();
             if (team == 0){ //red
                 if (side==0){ //left
-                    if (recognition.getLabel().equals("1Dot")) {
+                    if (autoParkPosition == 0) {
                         Left();
                         strafeLeft(25);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("2Dots")) {
+                    } else if (autoParkPosition == 1) {
                         Left();
                         strafeLeft(10);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("3Dots")) {
+                    } else if (autoParkPosition == 2) {
                         Left();
                         strafeRight(10);
                         armDown(38);
@@ -166,17 +211,17 @@ public class Auto extends LinearOpMode {
 
                 }
                 else{ //right
-                    if (recognition.getLabel().equals("1Dot")) {
+                    if (autoParkPosition == 0) {
                         Right();
                         strafeLeft(25);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("2Dots")) {
+                    } else if (autoParkPosition == 1) {
                         Right();
                         strafeLeft(10);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("3Dots")) {
+                    } else if (autoParkPosition == 2) {
                         Right();
                         strafeRight(10);
                         armDown(38);
@@ -189,17 +234,17 @@ public class Auto extends LinearOpMode {
             }
             else if (team==1){ //blue
                 if(side==0){ //left
-                    if (recognition.getLabel().equals("1Dot")) {
+                    if (autoParkPosition == 0) {
                         Left();
                         strafeLeft(25);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("2Dots")) {
+                    } else if (autoParkPosition == 1) {
                         Left();
                         strafeLeft(10);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("3Dots")) {
+                    } else if (autoParkPosition == 2) {
                         Left();
                         strafeRight(10);
                         armDown(38);
@@ -210,17 +255,17 @@ public class Auto extends LinearOpMode {
 
                 }
                 else{ //right
-                    if (recognition.getLabel().equals("1Dot")) {
+                    if (autoParkPosition == 0) {
                         Right();
                         strafeLeft(25);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("2Dots")) {
+                    } else if (autoParkPosition == 1) {
                         Right();
                         strafeLeft(10);
                         armDown(38);
 
-                    } else if (recognition.getLabel().equals("3Dots")) {
+                    } else if (autoParkPosition == 2) {
                         Right();
                         strafeRight(10);
                         armDown(38);
@@ -231,62 +276,12 @@ public class Auto extends LinearOpMode {
 
                 }
             }
-            while (opModeIsActive()) {
-                // Put loop blocks here.
-                // Get a list of recognitions from TFOD.
-                recognitions = tfod.getRecognitions();
-                // Creating a variable to link camera recognition
-                // to code I can actually use... hopefully
-                // If list is empty, inform the user. Otherwise, go
-                // through list and display info for each recognition.
-                if (JavaUtil.listLength(recognitions) == 0) {
-                    telemetry.addData("TFOD", "No items detected.");
-                } else {
-                    index = 0;
-                    // Iterate through list and call a function to
-                    // display info for each recognized object.
-                    for (Recognition recognition_item : recognitions) {
-                        recognition = recognition_item;
-                        // Display info.
-                        displayInfo(index);
-                        // Increment index.
-                        index = index + 1;
-                    }
-                    // Goes to the purple Action function
-                    // So that I can separate based on
-                    // The task the robot is doing
-                    //Actions();
-                }
-                telemetry.update();
-            }
-        }
-        // Deactivate TFOD.
-        tfod.deactivate();
-
-        vuforiaPOWERPLAY.close();
-        tfod.close();
-
-    }
-
-    public void Actions() {
-
-        if (recognition.getLabel().equals("1Dot")) {
-
-        } else if (recognition.getLabel().equals("2Dots")) {
-
-        } else if (recognition.getLabel().equals("3Dots")) {
-
-        } else {
-            telemetry.update();
         }
 
     }
 
-    public void displayInfo(int i) {
-        // Display the location of the top left corner
-        // of the detection boundary for the recognition
-        telemetry.addData("Label: " + recognition.getLabel() + ", Confidence: " + recognition.getConfidence(), "X: " + Math.round(JavaUtil.averageOfList(JavaUtil.createListWith(Double.parseDouble(JavaUtil.formatNumber(recognition.getLeft(), 0)), Double.parseDouble(JavaUtil.formatNumber(recognition.getRight(), 0))))) + ", Y: " + Math.round(JavaUtil.averageOfList(JavaUtil.createListWith(Double.parseDouble(JavaUtil.formatNumber(recognition.getTop(), 0)), Double.parseDouble(JavaUtil.formatNumber(recognition.getBottom(), 0))))));
-    }
+
+
 
     public void Score() {
         // forward
@@ -486,4 +481,13 @@ public class Auto extends LinearOpMode {
 //        frontright.setPower(0);
 //        Stop_and_reset();
 //    }
+void tagToTelemetry(AprilTagDetection detection) {
+    telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+    telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x * FEET_PER_METER));
+    telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y * FEET_PER_METER));
+    telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z * FEET_PER_METER));
+    telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+    telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+    telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+}
 }
