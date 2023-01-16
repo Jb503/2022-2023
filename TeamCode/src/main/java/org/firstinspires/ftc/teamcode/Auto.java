@@ -404,7 +404,7 @@ public class Auto extends LinearOpMode {
         sleep(500);
         Backward(6);
     }
-    
+
 
 //    public int inToTicks(double distance_in) {
 //        double doubleticks = distance_in * (1120/(3.89827 * 3.14));
