@@ -192,17 +192,17 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
-                        Left();
+                        redLeft();
                         strafeLeft(25);
                         armDown(38);
 
                     } else if (autoParkPosition == 1) {
-                        Left();
+                        redLeft();
                         strafeLeft(10);
                         armDown(38);
 
                     } else if (autoParkPosition == 2) {
-                        Left();
+                        redLeft();
                         strafeRight(10);
                         armDown(38);
 
@@ -213,17 +213,17 @@ public class Auto extends LinearOpMode {
                 }
                 else{ //right
                     if (autoParkPosition == 0) {
-                        Right();
+                        redRight();
                         strafeLeft(25);
                         armDown(38);
 
                     } else if (autoParkPosition == 1) {
-                        Right();
+                        redRight();
                         strafeLeft(10);
                         armDown(38);
 
                     } else if (autoParkPosition == 2) {
-                        Right();
+                        redRight();
                         strafeRight(10);
                         armDown(38);
 
@@ -236,17 +236,17 @@ public class Auto extends LinearOpMode {
             else if (team==1){ //blue
                 if(side==0){ //left
                     if (autoParkPosition == 0) {
-                        Left();
+                        blueLeft();
                         strafeLeft(25);
                         armDown(38);
 
                     } else if (autoParkPosition == 1) {
-                        Left();
+                        blueLeft();
                         strafeLeft(10);
                         armDown(38);
 
                     } else if (autoParkPosition == 2) {
-                        Left();
+                        blueLeft();
                         strafeRight(10);
                         armDown(38);
 
@@ -257,17 +257,17 @@ public class Auto extends LinearOpMode {
                 }
                 else{ //right
                     if (autoParkPosition == 0) {
-                        Right();
+                        blueRight();
                         strafeLeft(25);
                         armDown(38);
 
                     } else if (autoParkPosition == 1) {
-                        Right();
+                        blueRight();
                         strafeLeft(10);
                         armDown(38);
 
                     } else if (autoParkPosition == 2) {
-                        Right();
+                        blueRight();
                         strafeRight(10);
                         armDown(38);
 
@@ -385,25 +385,51 @@ public class Auto extends LinearOpMode {
         armmotor.setPower(0);
     }
 
-    public void Left(){
+    public void redLeft(){
         Claw.setPosition(0.85);
-        Forward(45);
-        strafeRight(12);
-        Forward(4);
+        Forward(43);
+        strafeRight(9);
         armUp(32.5);
+        Forward(4);
+        sleep(700);
         Claw.setPosition(1);
         sleep(500);
-        Backward(6);
+        Backward(8);
     }
-    public void Right(){
+    public void blueLeft(){
         Claw.setPosition(0.85);
-        Forward(45);
-        strafeLeft(12);
-        Forward(4);
+        Forward(41);
+        strafeRight(10);
         armUp(32.5);
+        Forward(3);
+        sleep(700);
         Claw.setPosition(1);
         sleep(500);
-        Backward(6);
+        Backward(8);
+    }
+    public void redRight(){
+        Claw.setPosition(0.85);
+        Forward(44);
+        strafeLeft(6);
+        armUp(32);
+        Forward(4);
+        sleep(700);
+        Claw.setPosition(1);
+        sleep(700);
+        Backward(5);
+        sleep (500);
+    }
+    public void blueRight(){
+        Claw.setPosition(0.85);
+        Forward(42);
+        strafeLeft(6);
+        armUp(32);
+        Forward(4);
+        sleep(700);
+        Claw.setPosition(1);
+        sleep(700);
+        Backward(5);
+        sleep(500);
     }
 
 

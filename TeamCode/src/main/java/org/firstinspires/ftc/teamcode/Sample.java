@@ -70,25 +70,25 @@ public class Sample extends LinearOpMode {
                 if (side==0){ //left
                         redLeft();
                         strafeRight(9);
-                        armDown(37);
+                        armDown(35);
                     }
 
                 else{ //right
                         redRight();
                         strafeRight(18);
-                        armDown(37);
+                        armDown(35);
                 }
             }
             else if (team==1){ //blue
                 if(side==0){ //left
                         blueLeft();
                         strafeRight(9);
-                        armDown(36);
+                        armDown(35);
                     }
                 else{ //right
                         blueRight();
                         strafeRight(9);
-                        armDown(37);
+                        armDown(35);
                     }
                 }
             }
@@ -164,9 +164,8 @@ public class Sample extends LinearOpMode {
         Claw.setPosition(0.85);
         Forward(43);
         strafeRight(9);
-        Forward(2);
         armUp(32.5);
-        Forward(2);
+        Forward(4);
         sleep(700);
         Claw.setPosition(1);
         sleep(500);
