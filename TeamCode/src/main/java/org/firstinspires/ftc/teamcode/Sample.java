@@ -185,7 +185,7 @@ public class Sample extends LinearOpMode {
     public void redRight(){
         Claw.setPosition(0.85);
         Forward(44);
-        strafeLeft(6);
+        strafeLeft(4);
         armUp(32);
         Forward(4);
         sleep(700);
@@ -196,8 +196,8 @@ public class Sample extends LinearOpMode {
     }
     public void blueRight(){
         Claw.setPosition(0.85);
-        Forward(42);
-        strafeLeft(6);
+        Forward(44);
+        strafeLeft(4);
         armUp(32);
         Forward(4);
         sleep(700);
