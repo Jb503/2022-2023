@@ -193,39 +193,42 @@ public class Auto extends LinearOpMode {
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
                         redLeft();
-                        strafeLeft(25);
-                        armDown(38);
+                        strafeLeft(20);
+                        armDown(35);
 
                     } else if (autoParkPosition == 1) {
                         redLeft();
                         strafeLeft(10);
-                        armDown(38);
+                        armDown(35);
 
                     } else if (autoParkPosition == 2) {
                         redLeft();
                         strafeRight(10);
-                        armDown(38);
+                        armDown(35);
 
                     } else {
                         telemetry.update();
                     }
 
                 }
-                else{ //right
+                else{ //red right
                     if (autoParkPosition == 0) {
                         redRight();
-                        strafeLeft(25);
-                        armDown(38);
+                        strafeLeft(10);
+                        armDown(35);
 
                     } else if (autoParkPosition == 1) {
                         redRight();
-                        strafeLeft(10);
-                        armDown(38);
+                        strafeRight(6);
+                        armDown(35);
 
                     } else if (autoParkPosition == 2) {
                         redRight();
-                        strafeRight(10);
-                        armDown(38);
+                        strafeRight(15);
+                        sleep(300);
+                        Backward(7);
+                        strafeRight(8);
+                        armDown(35);
 
                     } else {
                         telemetry.update();
@@ -238,17 +241,17 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         blueLeft();
                         strafeLeft(25);
-                        armDown(38);
+                        armDown(35);
 
                     } else if (autoParkPosition == 1) {
                         blueLeft();
-                        strafeLeft(10);
-                        armDown(38);
+                        strafeLeft(6);
+                        armDown(35);
 
                     } else if (autoParkPosition == 2) {
                         blueLeft();
                         strafeRight(10);
-                        armDown(38);
+                        armDown(35);
 
                     } else {
                         telemetry.update();
@@ -258,18 +261,18 @@ public class Auto extends LinearOpMode {
                 else{ //right
                     if (autoParkPosition == 0) {
                         blueRight();
-                        strafeLeft(25);
-                        armDown(38);
+                        strafeLeft(20);
+                        armDown(35);
 
                     } else if (autoParkPosition == 1) {
                         blueRight();
-                        strafeLeft(10);
-                        armDown(38);
+                        strafeRight(10);
+                        armDown(35);
 
                     } else if (autoParkPosition == 2) {
                         blueRight();
                         strafeRight(10);
-                        armDown(38);
+                        armDown(35);
 
                     } else {
                         telemetry.update();
@@ -398,7 +401,7 @@ public class Auto extends LinearOpMode {
     }
     public void blueLeft(){
         Claw.setPosition(0.85);
-        Forward(41);
+        Forward(40);
         strafeRight(10);
         armUp(32.5);
         Forward(3);
@@ -412,7 +415,7 @@ public class Auto extends LinearOpMode {
         Forward(44);
         strafeLeft(6);
         armUp(32);
-        Forward(4);
+        Forward(3);
         sleep(700);
         Claw.setPosition(1);
         sleep(700);
