@@ -194,17 +194,17 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         redLeft();
                         strafeLeft(25);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 1) {
                         redLeft();
                         strafeLeft(10);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 2) {
                         redLeft();
                         strafeRight(10);
-                        armDown(35);
+                        Arm_Run();
 
                     } else {
                         telemetry.update();
@@ -215,12 +215,12 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         redRight();
                         strafeLeft(10);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 1) {
                         redRight();
                         strafeRight(6);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 2) {
                         redRight();
@@ -228,7 +228,7 @@ public class Auto extends LinearOpMode {
                         sleep(300);
                         Backward(7);
                         strafeRight(6);
-                        armDown(35);
+                        Arm_Run();
 
                     } else {
                         telemetry.update();
@@ -241,17 +241,17 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         blueLeft();
                         strafeLeft(25);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 1) {
                         blueLeft();
                         strafeLeft(10);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 2) {
                         blueLeft();
                         strafeRight(10);
-                        armDown(35);
+                        Arm_Run();
 
                     } else {
                         telemetry.update();
@@ -262,12 +262,12 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         blueRight();
                         strafeLeft(8);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 1) {
                         blueRight();
                         strafeRight(8);
-                        armDown(35);
+                        Arm_Run();
 
                     } else if (autoParkPosition == 2) {
                         blueRight();
@@ -276,7 +276,7 @@ public class Auto extends LinearOpMode {
                         Backward(5);
                         strafeRight(6);
                         Backward(6);
-                        armDown(35);
+                        Arm_Run();
 
                     } else {
                         telemetry.update();
@@ -313,90 +313,79 @@ public class Auto extends LinearOpMode {
         frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void Arm_Reset() {
-        armmotor.setPower(0);
-        armmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
 
-    public void Arm_Run() {
-        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armmotor.setPower(0);
-        while (armmotor.isBusy() && opModeIsActive()) {
-        }
-        //Arm_Reset();
-    }
 
-    public void Forward(long inches) {
-        backleft.setPower(.75);
-        backright.setPower(.75);
-        frontleft.setPower(.75);
-        frontright.setPower(.75);
-        sleep((long) ((inches*(1000 / 19.2 )*3)/2));
-        backleft.setPower(0);
-        backright.setPower(0);
-        frontleft.setPower(0);
-        frontright.setPower(0);
-    }
-    public void Backward(long inches) {
-        backleft.setPower(-0.75);
-        backright.setPower(-0.75);
-        frontleft.setPower(-0.75);
-        frontright.setPower(-0.75);
-        sleep((long) ((inches*(1000 / 19.2 )*3)/2));
-        backleft.setPower(0);
-        backright.setPower(0);
-        frontleft.setPower(0);
-        frontright.setPower(0);
-    }
-    public void strafeRight(long inches) {
-        backleft.setPower(-.7);
-        backright.setPower(.7);
-        frontleft.setPower(.7);
-        frontright.setPower(-.7);
-        sleep((long) (inches*(1000/15.1)*2));
-        backleft.setPower(0);
-        backright.setPower(0);
-        frontleft.setPower(0);
-        frontright.setPower(0);
-    }
-    public void strafeLeft(long inches) {
-        backleft.setPower(.7);
-        backright.setPower(-.7);
-        frontleft.setPower(-.7);
-        frontright.setPower(.7);
-        sleep((long) (inches*(1000/15.1)*2));
-        backleft.setPower(0);
-        backright.setPower(0);
-        frontleft.setPower(0);
-        frontright.setPower(0);
-    }
-    public void turnRight(long degrees){
-        backleft.setPower(.7);
-        backright.setPower(-.7);
-        frontleft.setPower(-.7);
-        frontright.setPower(.7);
-        sleep((long) (degrees*(1000/15.1)*2));
-        backleft.setPower(0);
-        backright.setPower(0);
-        frontleft.setPower(0);
-        frontright.setPower(0);
-    }
-    public void armUp(double inches) {
-        armmotor.setPower(.75);
-        sleep((long) (inches*(1000/9.2)*1.5));
-        armmotor.setPower(0);
-    }
-    public void armDown(double inches) {
-        armmotor.setPower(-.75);
-        sleep((long) (inches*(1000/9.2)));
-        armmotor.setPower(0);
-    }
+//    public void Forward(long inches) {
+//        backleft.setPower(.75);
+//        backright.setPower(.75);
+//        frontleft.setPower(.75);
+//        frontright.setPower(.75);
+//        sleep((long) ((inches*(1000 / 19.2 )*3)/2));
+//        backleft.setPower(0);
+//        backright.setPower(0);
+//        frontleft.setPower(0);
+//        frontright.setPower(0);
+//    }
+//    public void Backward(long inches) {
+//        backleft.setPower(-0.75);
+//        backright.setPower(-0.75);
+//        frontleft.setPower(-0.75);
+//        frontright.setPower(-0.75);
+//        sleep((long) ((inches*(1000 / 19.2 )*3)/2));
+//        backleft.setPower(0);
+//        backright.setPower(0);
+//        frontleft.setPower(0);
+//        frontright.setPower(0);
+//    }
+//    public void strafeRight(long inches) {
+//        backleft.setPower(-.7);
+//        backright.setPower(.7);
+//        frontleft.setPower(.7);
+//        frontright.setPower(-.7);
+//        sleep((long) (inches*(1000/15.1)*2));
+//        backleft.setPower(0);
+//        backright.setPower(0);
+//        frontleft.setPower(0);
+//        frontright.setPower(0);
+//    }
+//    public void strafeLeft(long inches) {
+//        backleft.setPower(.7);
+//        backright.setPower(-.7);
+//        frontleft.setPower(-.7);
+//        frontright.setPower(.7);
+//        sleep((long) (inches*(1000/15.1)*2));
+//        backleft.setPower(0);
+//        backright.setPower(0);
+//        frontleft.setPower(0);
+//        frontright.setPower(0);
+//    }
+//    public void turnRight(long degrees){
+//        backleft.setPower(.7);
+//        backright.setPower(-.7);
+//        frontleft.setPower(-.7);
+//        frontright.setPower(.7);
+//        sleep((long) (degrees*(1000/15.1)*2));
+//        backleft.setPower(0);
+//        backright.setPower(0);
+//        frontleft.setPower(0);
+//        frontright.setPower(0);
+//    }
+//    public void armUp(double inches) {
+//        armmotor.setPower(.75);
+//        sleep((long) (inches*(1000/9.2)*1.5));
+//        armmotor.setPower(0);
+//    }
+//    public void armDown(double inches) {
+//        armmotor.setPower(-.75);
+//        sleep((long) (inches*(1000/9.2)));
+//        armmotor.setPower(0);
+//    }
 
     public void redLeft(){
         Claw.setPosition(0.85);
         Forward(38);
         strafeRight(9);
-        armUp(32.5);
+        Arm_Run();
         Forward(4);
         sleep(700);
         Claw.setPosition(1);
@@ -407,7 +396,7 @@ public class Auto extends LinearOpMode {
         Claw.setPosition(0.85);
         Forward(40);
         strafeRight(10);
-        armUp(32.5);
+        Arm_Run();
         Forward(3);
         sleep(700);
         Claw.setPosition(1);
@@ -418,7 +407,7 @@ public class Auto extends LinearOpMode {
         Claw.setPosition(0.85);
         Forward(40);
         strafeLeft(6);
-        armUp(32);
+        Arm_Run();
         Forward(3);
         sleep(700);
         Claw.setPosition(1);
@@ -430,7 +419,7 @@ public class Auto extends LinearOpMode {
         Claw.setPosition(0.85);
         Forward(40);
         strafeLeft(3);
-        armUp(32);
+        Arm_Run();
         Forward(4);
         sleep(700);
         Claw.setPosition(1);
@@ -440,81 +429,95 @@ public class Auto extends LinearOpMode {
     }
 
 
-//    public int inToTicks(double distance_in) {
-//        double doubleticks = distance_in * (1120/(3.89827 * 3.14));
-//        int ticksint = (int) Math.round(doubleticks);
-//        return ticksint;
-//    }
-//    public void Forward(double inches) {
-//        backleft.setTargetPosition(-inToTicks(inches));
-//        backright.setTargetPosition(-inToTicks(inches));
-//        frontleft.setTargetPosition(-inToTicks(inches));
-//        frontright.setTargetPosition(-inToTicks(inches));
-//        Run_to_position();
-//    }
-//
-//    public void Right(double inches) {
-//        backleft.setTargetPosition(inToTicks(inches));
-//        backright.setTargetPosition(-inToTicks(inches));
-//        frontleft.setTargetPosition(-inToTicks(inches));
-//        frontright.setTargetPosition(inToTicks(inches));
-//        Run_to_position();
-//    }
-//
-//    public void Backward(double inches) {
-//        backleft.setTargetPosition(inToTicks(inches));
-//        backright.setTargetPosition(inToTicks(inches));
-//        frontleft.setTargetPosition(inToTicks(inches));
-//        frontright.setTargetPosition(inToTicks(inches));
-//        Run_to_position();
-//    }
-//
-//    public void Left(double inches) {
-//        backleft.setTargetPosition(-inToTicks(inches));
-//        backright.setTargetPosition(inToTicks(inches));
-//        frontleft.setTargetPosition(inToTicks(inches));
-//        frontright.setTargetPosition(-inToTicks(inches));
-//        Run_to_position();
-//    }
-//
-//    public void turnClockwise(double inches) {
-//        backleft.setTargetPosition(-inToTicks(inches));
-//        backright.setTargetPosition(inToTicks(inches));
-//        frontleft.setTargetPosition(-inToTicks(inches));
-//        frontright.setTargetPosition(inToTicks(inches));
-//        Run_to_position();
-//    }
-//
-//    public void turnCounterClockwise(double inches) {
-//        backleft.setTargetPosition(inToTicks(inches));
-//        backright.setTargetPosition(-inToTicks(inches));
-//        frontleft.setTargetPosition(inToTicks(inches));
-//        frontright.setTargetPosition(-inToTicks(inches));
-//        Run_to_position();
-//    }
-//
-//    public void Run_to_position() {
-//        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        backleft.setPower(1);
-//        backright.setPower(1);
-//        frontleft.setPower(1);
-//        frontright.setPower(1);
-//        while (backleft.isBusy() && backright.isBusy() && frontleft.isBusy() && frontright.isBusy() && opModeIsActive()) {
-//            telemetry.addData("Motor ticks", backleft.getCurrentPosition());
-//            telemetry.addData("Motor ticks", backright.getCurrentPosition());
-//            telemetry.addData("Motor ticks", frontleft.getCurrentPosition());
-//            telemetry.addData("Motor ticks", frontright.getCurrentPosition());
-//            telemetry.update();
-//        }
-//        backleft.setPower(0);
-//        backright.setPower(0);
-//        frontleft.setPower(0);
-//        frontright.setPower(0);
-//        Stop_and_reset();
-//    }
+    public int inToTicks(double distance_in) {
+        double doubleticks = distance_in * (1120/(3.89827 * 3.14));
+        int ticksint = (int) Math.round(doubleticks);
+        return ticksint;
+    }
+    public void Forward(double inches) {
+        backleft.setTargetPosition(-inToTicks(inches));
+        backright.setTargetPosition(-inToTicks(inches));
+        frontleft.setTargetPosition(-inToTicks(inches));
+        frontright.setTargetPosition(-inToTicks(inches));
+        Run_to_position();
+    }
+
+    public void strafeRight(double inches) {
+        backleft.setTargetPosition(inToTicks(inches));
+        backright.setTargetPosition(-inToTicks(inches));
+        frontleft.setTargetPosition(-inToTicks(inches));
+        frontright.setTargetPosition(inToTicks(inches));
+        Run_to_position();
+    }
+
+    public void Backward(double inches) {
+        backleft.setTargetPosition(inToTicks(inches));
+        backright.setTargetPosition(inToTicks(inches));
+        frontleft.setTargetPosition(inToTicks(inches));
+        frontright.setTargetPosition(inToTicks(inches));
+        Run_to_position();
+    }
+
+    public void strafeLeft(double inches) {
+        backleft.setTargetPosition(-inToTicks(inches));
+        backright.setTargetPosition(inToTicks(inches));
+        frontleft.setTargetPosition(inToTicks(inches));
+        frontright.setTargetPosition(-inToTicks(inches));
+        Run_to_position();
+    }
+
+    public void turnClockwise(double inches) {
+        backleft.setTargetPosition(-inToTicks(inches));
+        backright.setTargetPosition(inToTicks(inches));
+        frontleft.setTargetPosition(-inToTicks(inches));
+        frontright.setTargetPosition(inToTicks(inches));
+        Run_to_position();
+    }
+
+    public void turnCounterClockwise(double inches) {
+        backleft.setTargetPosition(inToTicks(inches));
+        backright.setTargetPosition(-inToTicks(inches));
+        frontleft.setTargetPosition(inToTicks(inches));
+        frontright.setTargetPosition(-inToTicks(inches));
+        Run_to_position();
+    }
+
+    public void Arm_Reset() {
+        armmotor.setPower(0);
+        armmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void Arm_Run() {
+        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armmotor.setPower(0);
+        while (armmotor.isBusy() && opModeIsActive()) {
+        }
+        Arm_Reset();
+    }
+
+    public void Run_to_position() {
+        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backleft.setPower(1);
+        backright.setPower(1);
+        frontleft.setPower(1);
+        frontright.setPower(1);
+        while (backleft.isBusy() && backright.isBusy() && frontleft.isBusy() && frontright.isBusy() && opModeIsActive()) {
+            telemetry.addData("Motor ticks", backleft.getCurrentPosition());
+            telemetry.addData("Motor ticks", backright.getCurrentPosition());
+            telemetry.addData("Motor ticks", frontleft.getCurrentPosition());
+            telemetry.addData("Motor ticks", frontright.getCurrentPosition());
+            telemetry.update();
+        }
+        backleft.setPower(0);
+        backright.setPower(0);
+        frontleft.setPower(0);
+        frontright.setPower(0);
+        Stop_and_reset();
+    }
+
     void tagToTelemetry(AprilTagDetection detection) {
       telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
       telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x * FEET_PER_METER));
