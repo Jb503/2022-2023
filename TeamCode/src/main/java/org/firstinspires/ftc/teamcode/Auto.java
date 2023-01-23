@@ -227,7 +227,7 @@ public class Auto extends LinearOpMode {
                         strafeRight(15);
                         sleep(300);
                         Backward(7);
-                        strafeRight(8);
+                        strafeRight(6);
                         armDown(35);
 
                     } else {
@@ -394,8 +394,8 @@ public class Auto extends LinearOpMode {
 
     public void redLeft(){
         Claw.setPosition(0.85);
-        Forward(40);
-        strafeRight(7);
+        Forward(38);
+        strafeRight(9);
         armUp(32.5);
         Forward(4);
         sleep(700);
