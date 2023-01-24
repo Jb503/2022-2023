@@ -42,8 +42,8 @@ public class DriveCode extends LinearOpMode {
         if (opModeIsActive()) {
             // Put run blocks here.
             while (opModeIsActive()) {
-                y = -gamepad1.right_stick_x;
-                x = gamepad1.left_stick_y;
+                x = -gamepad1.right_stick_x;
+                y = gamepad1.left_stick_y;
                 rx = gamepad1.left_stick_x * 1.1;
                 armdown = gamepad1.left_trigger;
                 armup = gamepad1.right_trigger;
