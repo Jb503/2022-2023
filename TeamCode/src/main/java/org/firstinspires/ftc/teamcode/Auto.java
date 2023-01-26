@@ -288,19 +288,6 @@ public class Auto extends LinearOpMode {
 
     }
 
-
-
-
-    public void Score() {
-        // forward
-        // strafe right
-        // raise arm
-        // open claw
-        // move back
-        // strafe left
-        // go to starting position
-    }
-
     public void Stop_and_reset() {
 
         backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -312,8 +299,6 @@ public class Auto extends LinearOpMode {
         frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
-
 
 //    public void Forward(long inches) {
 //        backleft.setPower(.75);
@@ -381,7 +366,7 @@ public class Auto extends LinearOpMode {
 //        armmotor.setPower(0);
 //    }
 
-    public void redLeft(){
+    public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
         Forward(38);
         strafeRight(9);
@@ -392,7 +377,7 @@ public class Auto extends LinearOpMode {
         sleep(500);
         Backward(8);
     }
-    public void blueLeft(){
+    public void blueLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
         Forward(40);
         strafeRight(10);
@@ -403,7 +388,7 @@ public class Auto extends LinearOpMode {
         sleep(500);
         Backward(6);
     }
-    public void redRight(){
+    public void redRight(){ //CO, F50, L10, up, F5, CO, B4, TR90*, F37, down, B
         Claw.setPosition(0.85);
         Forward(40);
         strafeLeft(6);
@@ -430,7 +415,7 @@ public class Auto extends LinearOpMode {
 
 
     public int inToTicks(double distance_in) {
-        double doubleticks = distance_in * (1120/(3.89827 * 3.14));
+        double doubleticks = distance_in * (1140/(3.89827 * 3.14));
         int ticksint = (int) Math.round(doubleticks);
         return ticksint;
     }
@@ -466,19 +451,19 @@ public class Auto extends LinearOpMode {
         Run_to_position();
     }
 
-    public void turnClockwise(double inches) {
-        backleft.setTargetPosition(-inToTicks(inches));
-        backright.setTargetPosition(inToTicks(inches));
-        frontleft.setTargetPosition(-inToTicks(inches));
-        frontright.setTargetPosition(inToTicks(inches));
+    public void turnClockwise(double degrees) {
+        backleft.setTargetPosition(-inToTicks(degrees));
+        backright.setTargetPosition(inToTicks(degrees));
+        frontleft.setTargetPosition(-inToTicks(degrees));
+        frontright.setTargetPosition(inToTicks(degrees));
         Run_to_position();
     }
 
-    public void turnCounterClockwise(double inches) {
-        backleft.setTargetPosition(inToTicks(inches));
-        backright.setTargetPosition(-inToTicks(inches));
-        frontleft.setTargetPosition(inToTicks(inches));
-        frontright.setTargetPosition(-inToTicks(inches));
+    public void turnCounterClockwise(double degrees) {
+        backleft.setTargetPosition(inToTicks(degrees));
+        backright.setTargetPosition(-inToTicks(degrees));
+        frontleft.setTargetPosition(inToTicks(degrees));
+        frontright.setTargetPosition(-inToTicks(degrees));
         Run_to_position();
     }
 
