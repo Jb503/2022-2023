@@ -100,13 +100,11 @@ public class Auto extends LinearOpMode {
         // 1440- motor
         // 119 ticks per inch
 
-        backright.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //Stop_and_reset();
-        //Arm_Reset();
         while(!opModeIsActive() && !isStopRequested()){
             if(gamepad1.a){
                 telemetry.addData("team", "red");
@@ -192,19 +190,18 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
-//                        redLeft();
-//                        strafeLeft(25);
-//                        // Arm_Run();
-                        Forward(48);
+                        redLeft();
+                        strafeLeft(18);
+                        armRunDown(35);
                     } else if (autoParkPosition == 1) {
                         redLeft();
                         strafeLeft(10);
-                        // Arm_Run();
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
                         redLeft();
                         strafeRight(10);
-                        // Arm_Run();
+                        armRunDown(35);
 
                     } else {
                         telemetry.update();
@@ -215,20 +212,17 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         redRight();
                         strafeLeft(10);
-                        // Arm_Run();
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 1) {
                         redRight();
-                        strafeRight(6);
-                        // Arm_Run();
+                        strafeRight(10);
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
                         redRight();
-                        strafeRight(15);
-                        sleep(300);
-                        Backward(7);
-                        strafeRight(6);
-                        // Arm_Run();
+                        strafeRight(20);
+                        armRunDown(35);
 
                     } else {
                         telemetry.update();
@@ -240,18 +234,18 @@ public class Auto extends LinearOpMode {
                 if(side==0){ //left
                     if (autoParkPosition == 0) {
                         blueLeft();
-                        strafeLeft(25);
-                        // Arm_Run();
+                        strafeLeft(20);
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 1) {
                         blueLeft();
                         strafeLeft(10);
-                        // Arm_Run();
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
                         blueLeft();
                         strafeRight(10);
-                        // Arm_Run();
+                        armRunDown(35);
 
                     } else {
                         telemetry.update();
@@ -261,22 +255,18 @@ public class Auto extends LinearOpMode {
                 else{ //right
                     if (autoParkPosition == 0) {
                         blueRight();
-                        strafeLeft(8);
-                        // Arm_Run();
+                        strafeLeft(10);
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 1) {
                         blueRight();
-                        strafeRight(8);
-                        // Arm_Run();
+                        strafeRight(10);
+                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
                         blueRight();
-                        strafeRight(12);
-                        sleep(300);
-                        Backward(5);
-                        strafeRight(6);
-                        Backward(6);
-                        // Arm_Run();
+                        strafeRight(20);
+                        armRunDown(35);
 
                     } else {
                         telemetry.update();
@@ -288,17 +278,7 @@ public class Auto extends LinearOpMode {
 
     }
 
-    public void Stop_and_reset() {
 
-        backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
 
 //    public void Forward(long inches) {
 //        backleft.setPower(.75);
@@ -368,53 +348,47 @@ public class Auto extends LinearOpMode {
 
     public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
-//        Forward(38);
         Forward(50);
-//        strafeRight(9);
         strafeRight(10);
-        // Arm_Run();
-//        Forward(4);
+        armRun(35);
         Forward(5);
         sleep(700);
         Claw.setPosition(1);
         sleep(500);
-//        Backward(8);
         Backward(4);
     }
     public void blueLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
-        Forward(40);
+        Forward(50);
         strafeRight(10);
-        // Arm_Run();
-        Forward(3);
+        armRun(35);
+        Forward(5);
         sleep(700);
         Claw.setPosition(1);
         sleep(500);
-        Backward(6);
+        Backward(4);
     }
     public void redRight(){ //CO, F50, L10, up, F5, CO, B4, TR90*, F37, down, B
         Claw.setPosition(0.85);
-        Forward(40);
-        strafeLeft(6);
-        // Arm_Run();
-        Forward(3);
+        Forward(50);
+        strafeLeft(10);
+        armRun(35);
+        Forward(5);
         sleep(700);
         Claw.setPosition(1);
         sleep(700);
         Backward(4);
-        sleep (500);
     }
     public void blueRight(){
         Claw.setPosition(0.85);
-        Forward(40);
-        strafeLeft(3);
-        // Arm_Run();
-        Forward(4);
+        Forward(50);
+        strafeLeft(10);
+        armRun(35);
+        Forward(5);
         sleep(700);
         Claw.setPosition(1);
         sleep(700);
         Backward(4);
-        sleep(500);
     }
 
 
@@ -423,6 +397,7 @@ public class Auto extends LinearOpMode {
         int ticksint = (int) Math.round(doubleticks);
         return ticksint;
     }
+
     public void Forward(double inches) {
         backleft.setTargetPosition(-inToTicks(inches));
         backright.setTargetPosition(-inToTicks(inches));
@@ -471,17 +446,33 @@ public class Auto extends LinearOpMode {
         Run_to_position();
     }
 
-    public void Arm_Reset() {
+    public void armRun(double inches) {
+        armmotor.setTargetPosition(inToTicks(inches));
+        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armmotor.setPower(1);
+        while (armmotor.isBusy() && opModeIsActive()) {
+            telemetry.addData("Motor ticks", armmotor.getCurrentPosition());
+            telemetry.update();
+        }
         armmotor.setPower(0);
-        armmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Arm_Reset();
     }
 
-    public void  Arm_Run() {
+    public void armRunDown(double inches) {
+        armmotor.setTargetPosition(-inToTicks(inches));
         armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armmotor.setPower(0);
+        armmotor.setPower(1);
         while (armmotor.isBusy() && opModeIsActive()) {
+            telemetry.addData("Motor ticks", armmotor.getCurrentPosition());
+            telemetry.update();
         }
+        armmotor.setPower(0);
         Arm_Reset();
+    }
+
+    public void Arm_Reset() {
+        armmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void Run_to_position() {
@@ -505,6 +496,18 @@ public class Auto extends LinearOpMode {
         frontleft.setPower(0);
         frontright.setPower(0);
         Stop_and_reset();
+    }
+
+    public void Stop_and_reset() {
+
+        backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     void tagToTelemetry(AprilTagDetection detection) {
