@@ -191,17 +191,17 @@ public class Auto extends LinearOpMode {
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
                         redLeft();
-                        strafeLeft(18);
-                        armRunDown(35);
+//                        strafeLeft(18);
+//                        armRunDown(35);
                     } else if (autoParkPosition == 1) {
                         redLeft();
-                        strafeLeft(10);
-                        armRunDown(35);
+//                        strafeLeft(10);
+//                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
                         redLeft();
-                        strafeRight(10);
-                        armRunDown(35);
+//                        strafeRight(10);
+//                        armRunDown(35);
 
                     } else {
                         telemetry.update();
@@ -347,15 +347,16 @@ public class Auto extends LinearOpMode {
 //    }
 
     public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
-        Claw.setPosition(0.85);
-        Forward(50);
-        strafeRight(10);
-        armRun(35);
-        Forward(5);
-        sleep(700);
-        Claw.setPosition(1);
-        sleep(500);
-        Backward(4);
+          Forward(20);
+//        Claw.setPosition(0.85);
+//        Forward(50);
+//        strafeRight(10);
+//        armRun(35);
+//        Forward(5);
+//        sleep(700);
+//        Claw.setPosition(1);
+//        sleep(500);
+//        Backward(4);
     }
     public void blueLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
@@ -393,7 +394,7 @@ public class Auto extends LinearOpMode {
 
 
     public int inToTicks(double distance_in) {
-        double doubleticks = (distance_in * (1440/(3.89827 * 3.14))) * (48/47);
+        double doubleticks = (distance_in * (1440/(3.89827 * 3.14))*2);
         int ticksint = (int) Math.round(doubleticks);
         return ticksint;
     }
