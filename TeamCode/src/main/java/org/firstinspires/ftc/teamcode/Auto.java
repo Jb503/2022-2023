@@ -484,7 +484,7 @@ public class Auto extends LinearOpMode {
         backright.setPower(1);
         frontleft.setPower(1);
         frontright.setPower(1);
-        while (backleft.isBusy() && backright.isBusy() && frontleft.isBusy() && frontright.isBusy() && opModeIsActive()) {
+        while ((backleft.isBusy() || backright.isBusy() || frontleft.isBusy() || frontright.isBusy()) && opModeIsActive()) {
             telemetry.addData("Motor ticks", backleft.getCurrentPosition());
             telemetry.addData("Motor ticks", backright.getCurrentPosition());
             telemetry.addData("Motor ticks", frontleft.getCurrentPosition());
