@@ -99,11 +99,15 @@ public class Auto extends LinearOpMode {
         // 3.85827- wheel
         // 1440- motor
         // 119 ticks per inch
-
-        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        backright.setDirection(DcMotorSimple.Direction.REVERSE);
         frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         while(!opModeIsActive() && !isStopRequested()){
             if(gamepad1.a){
@@ -190,7 +194,8 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
-                        redLeft();
+                          Forward(20);
+//                        redLeft();
 //                        strafeLeft(18);
 //                        armRunDown(35);
                     } else if (autoParkPosition == 1) {
@@ -199,7 +204,8 @@ public class Auto extends LinearOpMode {
 //                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
-                        redLeft();
+                          Forward(20);
+//                        redLeft();
 //                        strafeRight(10);
 //                        armRunDown(35);
 
@@ -278,7 +284,7 @@ public class Auto extends LinearOpMode {
 
     }
 
-
+// velocity = rotations per minute * ticks per rotation
 
 //    public void Forward(long inches) {
 //        backleft.setPower(.75);
@@ -347,16 +353,15 @@ public class Auto extends LinearOpMode {
 //    }
 
     public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
-          Forward(20);
-//        Claw.setPosition(0.85);
-//        Forward(50);
-//        strafeRight(10);
-//        armRun(35);
-//        Forward(5);
-//        sleep(700);
-//        Claw.setPosition(1);
-//        sleep(500);
-//        Backward(4);
+        Claw.setPosition(0.85);
+        Forward(50);
+        strafeRight(10);
+        armRun(35);
+        Forward(5);
+        sleep(700);
+        Claw.setPosition(1);
+        sleep(500);
+        Backward(4);
     }
     public void blueLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
@@ -394,16 +399,16 @@ public class Auto extends LinearOpMode {
 
 
     public int inToTicks(double distance_in) {
-        double doubleticks = (distance_in * (1440/(3.89827 * 3.14))*2);
+        double doubleticks = (distance_in * (1440/(3.89827 * 3.14))*(48/47));
         int ticksint = (int) Math.round(doubleticks);
         return ticksint;
     }
 
     public void Forward(double inches) {
-        backleft.setTargetPosition(-inToTicks(inches));
-        backright.setTargetPosition(-inToTicks(inches));
-        frontleft.setTargetPosition(-inToTicks(inches));
-        frontright.setTargetPosition(-inToTicks(inches));
+        backleft.setTargetPosition(inToTicks(inches));
+        backright.setTargetPosition(inToTicks(inches));
+        frontleft.setTargetPosition(inToTicks(inches));
+        frontright.setTargetPosition(inToTicks(inches));
         Run_to_position();
     }
 
@@ -416,10 +421,10 @@ public class Auto extends LinearOpMode {
     }
 
     public void Backward(double inches) {
-        backleft.setTargetPosition(inToTicks(inches));
-        backright.setTargetPosition(inToTicks(inches));
-        frontleft.setTargetPosition(inToTicks(inches));
-        frontright.setTargetPosition(inToTicks(inches));
+        backleft.setTargetPosition(-inToTicks(inches));
+        backright.setTargetPosition(-inToTicks(inches));
+        frontleft.setTargetPosition(-inToTicks(inches));
+        frontright.setTargetPosition(-inToTicks(inches));
         Run_to_position();
     }
 
@@ -477,15 +482,15 @@ public class Auto extends LinearOpMode {
     }
 
     public void Run_to_position() {
-        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backleft.setPower(1);
         backright.setPower(1);
         frontleft.setPower(1);
         frontright.setPower(1);
-        while ((backleft.isBusy() || backright.isBusy() || frontleft.isBusy() || frontright.isBusy()) && opModeIsActive()) {
+        backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && backleft.isBusy() || backright.isBusy() || frontleft.isBusy() || frontright.isBusy()) {
             telemetry.addData("Motor ticks", backleft.getCurrentPosition());
             telemetry.addData("Motor ticks", backright.getCurrentPosition());
             telemetry.addData("Motor ticks", frontleft.getCurrentPosition());
@@ -500,15 +505,14 @@ public class Auto extends LinearOpMode {
     }
 
     public void Stop_and_reset() {
-
         backleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     void tagToTelemetry(AprilTagDetection detection) {
