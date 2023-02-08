@@ -194,7 +194,7 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
-                          Forward(20);
+                          Forward(50);
 //                        redLeft();
 //                        strafeLeft(18);
 //                        armRunDown(35);
@@ -204,7 +204,7 @@ public class Auto extends LinearOpMode {
 //                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
-                          Forward(20);
+                          Forward(50);
 //                        redLeft();
 //                        strafeRight(10);
 //                        armRunDown(35);
@@ -399,7 +399,7 @@ public class Auto extends LinearOpMode {
 
 
     public int inToTicks(double distance_in) {
-        double doubleticks = (distance_in * (1440/(3.89827 * 3.14))*(48/47));
+        double doubleticks = (distance_in * (1440/(3.89827 * 3.14)*(48/47)));
         int ticksint = (int) Math.round(doubleticks);
         return ticksint;
     }
@@ -482,9 +482,9 @@ public class Auto extends LinearOpMode {
     }
 
     public void Run_to_position() {
-        backleft.setPower(1);
+        backleft.setPower(.8);
         backright.setPower(1);
-        frontleft.setPower(1);
+        frontleft.setPower(.8);
         frontright.setPower(1);
         backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -509,10 +509,10 @@ public class Auto extends LinearOpMode {
         backright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontleft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontright.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     void tagToTelemetry(AprilTagDetection detection) {
