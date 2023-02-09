@@ -88,10 +88,10 @@ public class DriveCode extends LinearOpMode {
                 if (gamepad1.right_bumper) {
                     Claw.setPosition(1);
                 }
-//                telemetry.addData("FL",frontleft.getCurrentPosition());    For testing if encoders are working
-//                telemetry.addData("BL",backleft.getCurrentPosition());
-//                telemetry.addData("FR",frontright.getCurrentPosition());
-//                telemetry.addData("BR",backright.getCurrentPosition());
+                telemetry.addData("FL",frontleft.getCurrentPosition());    //For testing if encoders are working
+                telemetry.addData("BL",backleft.getCurrentPosition());
+                telemetry.addData("FR",frontright.getCurrentPosition());
+                telemetry.addData("BR",backright.getCurrentPosition());
                 telemetry.addData("Lift Encoders", armmotor.getCurrentPosition());
                 telemetry.update();
             }

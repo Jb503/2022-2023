@@ -204,7 +204,8 @@ public class Auto extends LinearOpMode {
 //                        armRunDown(35);
 
                     } else if (autoParkPosition == 2) {
-                          Forward(50);
+                          strafeRight(10);
+                          strafeLeft(10);
 //                        redLeft();
 //                        strafeRight(10);
 //                        armRunDown(35);
@@ -482,9 +483,9 @@ public class Auto extends LinearOpMode {
     }
 
     public void Run_to_position() {
-        backleft.setPower(.8);
+        backleft.setPower(1);
         backright.setPower(1);
-        frontleft.setPower(.8);
+        frontleft.setPower(1);
         frontright.setPower(1);
         backleft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backright.setMode(DcMotor.RunMode.RUN_TO_POSITION);
