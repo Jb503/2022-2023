@@ -202,8 +202,8 @@ public class Auto extends LinearOpMode {
                         // Arm_Run();
 
                     } else if (autoParkPosition == 2) {
-                        redLeft();
-                        strafeRight(10);
+//                        redLeft();
+                        Forward(10);
                         // Arm_Run();
 
                     } else {
