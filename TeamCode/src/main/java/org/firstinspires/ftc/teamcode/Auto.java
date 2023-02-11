@@ -100,10 +100,14 @@ public class Auto extends LinearOpMode {
         // 1440- motor
         // 119 ticks per inch
 
-        backright.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontright.setDirection(DcMotorSimple.Direction.REVERSE);
+        backleft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontleft.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor.setDirection(DcMotorSimple.Direction.REVERSE);
         armmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Stop_and_reset();
         //Arm_Reset();
@@ -426,8 +430,8 @@ public class Auto extends LinearOpMode {
     public void Forward(double inches) {
         backleft.setTargetPosition(-inToTicks(inches));
         backright.setTargetPosition(-inToTicks(inches));
-        frontleft.setTargetPosition(-inToTicks(inches));
-        frontright.setTargetPosition(-inToTicks(inches));
+        frontleft.setTargetPosition(inToTicks(inches));
+        frontright.setTargetPosition(inToTicks(inches));
         Run_to_position();
     }
 
@@ -442,8 +446,8 @@ public class Auto extends LinearOpMode {
     public void Backward(double inches) {
         backleft.setTargetPosition(inToTicks(inches));
         backright.setTargetPosition(inToTicks(inches));
-        frontleft.setTargetPosition(inToTicks(inches));
-        frontright.setTargetPosition(inToTicks(inches));
+        frontleft.setTargetPosition(-inToTicks(inches));
+        frontright.setTargetPosition(-inToTicks(inches));
         Run_to_position();
     }
 

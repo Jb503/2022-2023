@@ -51,8 +51,8 @@ public class DriveCode extends LinearOpMode {
 
                 // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
                 double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-                double lateral =  gamepad1.left_stick_x;
-                double yaw     =  gamepad1.right_stick_x;
+                double lateral =  gamepad1.right_stick_x;
+                double yaw     =  gamepad1.left_stick_x;
 
                 // Combine the joystick requests for each axis-motion to determine each wheel's power.
                 // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -76,8 +76,8 @@ public class DriveCode extends LinearOpMode {
                 // Send calculated power to wheels
                 frontleft.setPower(leftFrontPower);
                 frontright.setPower(rightFrontPower);
-                backleft.setPower(leftBackPower);
-                backright.setPower(rightBackPower);
+                backleft.setPower(-leftBackPower);
+                backright.setPower(-rightBackPower);
                 armdown = gamepad1.left_trigger;
                 armup = gamepad1.right_trigger;
 
@@ -88,10 +88,10 @@ public class DriveCode extends LinearOpMode {
                 if (gamepad1.right_bumper) {
                     Claw.setPosition(1);
                 }
-//                telemetry.addData("FL",frontleft.getCurrentPosition());    For testing if encoders are working
-//                telemetry.addData("BL",backleft.getCurrentPosition());
-//                telemetry.addData("FR",frontright.getCurrentPosition());
-//                telemetry.addData("BR",backright.getCurrentPosition());
+                telemetry.addData("FL",frontleft.getCurrentPosition()); //   For testing if encoders are working
+                telemetry.addData("BL",backleft.getCurrentPosition());
+                telemetry.addData("FR",frontright.getCurrentPosition());
+                telemetry.addData("BR",backright.getCurrentPosition());
                 telemetry.addData("Lift Encoders", armmotor.getCurrentPosition());
                 telemetry.update();
             }
