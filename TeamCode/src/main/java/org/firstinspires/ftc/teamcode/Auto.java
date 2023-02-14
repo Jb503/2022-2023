@@ -109,8 +109,9 @@ public class Auto extends LinearOpMode {
         backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //Stop_and_reset();
-        //Arm_Reset();
+        Stop_and_reset();
+        Arm_Reset();
+
         while(!opModeIsActive() && !isStopRequested()){
             if(gamepad1.a){
                 telemetry.addData("team", "red");
@@ -198,16 +199,16 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         redLeft();
                         strafeLeft(25);
-                        armRunDown();
+                        armRunDown(32);
                     } else if (autoParkPosition == 1) {
                         redLeft();
                         strafeLeft(15);
-                        armRunDown();
+                        armRunDown(32);
 
                     } else if (autoParkPosition == 2) {
                         redLeft();
                         strafeRight(15);
-                        armRunDown();
+                        armRunDown(32);
 
                     } else {
                         telemetry.update();
@@ -371,11 +372,9 @@ public class Auto extends LinearOpMode {
 
     public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
-        Forward(46);
+        Forward(48);
         strafeRight(17);
-        while (opModeIsActive()){
-            armRunUp();
-        }
+        armRunUp(32);
         Forward(8);
         sleep(700);
         Claw.setPosition(1);
@@ -424,6 +423,7 @@ public class Auto extends LinearOpMode {
         int ticksint = (int) Math.round(doubleticks);
         return ticksint;
     }
+
     public void Forward(double inches) {
         backleft.setTargetPosition(-inToTicks(inches));
         backright.setTargetPosition(-inToTicks(inches));
@@ -473,31 +473,33 @@ public class Auto extends LinearOpMode {
     }
 
     public void Arm_Reset() {
-        armmotor.setPower(0);
         armmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armmotor.setTargetPosition(0);
+        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armmotor.setPower(0);
     }
 
-    public void  armRunUp () {
-//        armmotor.setTargetPosition(-inToTicks(inches));
-//        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        armmotor.setPower(0);
-//        while (armmotor.isBusy() && opModeIsActive()) {
-//        }
-//        Arm_Reset();
+    public void  armRunUp (double inches) {
+        armmotor.setTargetPosition(inToTicks(inches)*2);
+        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armmotor.setPower(1);
-        sleep(5500);
-        armmotor.setPower(0);
-    }
-    public void  armRunDown () {
-//        armmotor.setTargetPosition(inToTicks(inches));
-//        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (armmotor.isBusy() && opModeIsActive()) {
+        }
+        Arm_Reset();
+//        armmotor.setPower(1);
+//        sleep(5500);
 //        armmotor.setPower(0);
-//        while (armmotor.isBusy() && opModeIsActive()) {
-//        }
-//        Arm_Reset();
-        armmotor.setPower(-1);
-        sleep(5500);
-        armmotor.setPower(0);
+    }
+    public void  armRunDown (double inches) {
+        armmotor.setTargetPosition(-inToTicks(inches)*2);
+        armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armmotor.setPower(1);
+        while (armmotor.isBusy() && opModeIsActive()) {
+        }
+        Arm_Reset();
+//        armmotor.setPower(-1);
+//        sleep(5500);
+//        armmotor.setPower(0);
     }
 
     public void Run_to_position() {
