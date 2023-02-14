@@ -371,12 +371,10 @@ public class Auto extends LinearOpMode {
 
     public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         Claw.setPosition(0.85);
-        Forward(50);
-        strafeRight(15);
-        while (backleft.isBusy() && opModeIsActive()){
-            do while (backleft.isBusy() && opModeIsActive()){
-                armRunUp();
-            }
+        Forward(46);
+        strafeRight(17);
+        while (opModeIsActive()){
+            armRunUp();
         }
         Forward(8);
         sleep(700);
@@ -487,7 +485,7 @@ public class Auto extends LinearOpMode {
 //        }
 //        Arm_Reset();
         armmotor.setPower(1);
-        sleep(6000);
+        sleep(5500);
         armmotor.setPower(0);
     }
     public void  armRunDown () {
@@ -498,7 +496,7 @@ public class Auto extends LinearOpMode {
 //        }
 //        Arm_Reset();
         armmotor.setPower(-1);
-        sleep(6000);
+        sleep(5500);
         armmotor.setPower(0);
     }
 
