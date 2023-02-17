@@ -35,9 +35,6 @@ public class Auto extends LinearOpMode {
 
     Recognition recognition;
 
-    /**
-     * This function is executed when this Op Mode is selected from the Driver Station.
-     */
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -197,18 +194,24 @@ public class Auto extends LinearOpMode {
             if (team == 0){ //red
                 if (side==0){ //left
                     if (autoParkPosition == 0) {
+//                        frontleft.setTargetPosition(30000);
+//                        frontright.setTargetPosition(-30000);
+//                        backleft.setTargetPosition(30000);
+//                        backright.setTargetPosition(-30000);
+//                        Run_to_position();
                         redLeft();
                         strafeLeft(40);
-                        armRunDown(32);
+                        Backward(4);
+                        armRunDown(33);
                     } else if (autoParkPosition == 1) {
                         redLeft();
                         strafeLeft(12);
-                        armRunDown(32);
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         redLeft();
                         strafeRight(15);
-                        armRunDown(32);
+                        armRunDown(33);
 
                     } else {
                         telemetry.update();
@@ -219,12 +222,12 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         redRight();
                         strafeLeft(10);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         redRight();
                         strafeRight(6);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         redRight();
@@ -232,7 +235,7 @@ public class Auto extends LinearOpMode {
                         sleep(300);
                         Backward(7);
                         strafeRight(6);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else {
                         telemetry.update();
@@ -245,17 +248,17 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         blueLeft();
                         strafeLeft(25);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         blueLeft();
                         strafeLeft(10);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         blueLeft();
                         strafeRight(10);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else {
                         telemetry.update();
@@ -266,12 +269,12 @@ public class Auto extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         blueRight();
                         strafeLeft(8);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         blueRight();
                         strafeRight(8);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         blueRight();
@@ -280,7 +283,7 @@ public class Auto extends LinearOpMode {
                         Backward(5);
                         strafeRight(6);
                         Backward(6);
-                        // Arm_Run();
+                        armRunDown(33);
 
                     } else {
                         telemetry.update();
@@ -374,22 +377,22 @@ public class Auto extends LinearOpMode {
         //cone 1
         Claw.setPosition(0.85);
         Forward(48);
-        strafeRight(18);
-        armRunUp(35);
+        strafeRight(16);
+        armRunUp(33);
         Forward(8);
         sleep(700);
         Claw.setPosition(1);
         sleep(500);
-        Backward(4);
+        Backward(5);
         //cone 2
-        turnCounterClockwise(90);
-        Forward (37);
-        armRunDown(23);
+        turnCounterClockwise(88);
+        Forward (40);
+        armRunDown(25);
         Claw.setPosition(0.85);
-        Backward(37);
-        turnClockwise(90);
-        armRunUp(15);
-        Forward(4);
+        Backward(36);
+        turnClockwise(95);
+        armRunUp(25);
+        Forward(5);
         sleep(700);
         Claw.setPosition(1);
         sleep(500);
@@ -438,6 +441,14 @@ public class Auto extends LinearOpMode {
         return ticksint;
     }
 
+    public int degToTicks(int degrees) {
+        double Ddoubleticks = (degrees/360.0 * (30000/3.55));
+        int ticksint = (int) Math.round(Ddoubleticks);
+        telemetry.addData("here ticksint", ticksint);
+        telemetry.update();
+        return ticksint;
+    }
+
     public void Forward(double inches) {
         backleft.setTargetPosition(-inToTicks(inches));
         backright.setTargetPosition(-inToTicks(inches));
@@ -470,19 +481,19 @@ public class Auto extends LinearOpMode {
         Run_to_position();
     }
 
-    public void turnClockwise(double degrees) {
-        backleft.setTargetPosition(-inToTicks(degrees));
-        backright.setTargetPosition(inToTicks(degrees));
-        frontleft.setTargetPosition(-inToTicks(degrees));
-        frontright.setTargetPosition(inToTicks(degrees));
+    public void turnClockwise(int degrees) {
+        backleft.setTargetPosition(degToTicks(degrees));
+        backright.setTargetPosition(-degToTicks(degrees));
+        frontleft.setTargetPosition(degToTicks(degrees));
+        frontright.setTargetPosition(-degToTicks(degrees));
         Run_to_position();
     }
 
-    public void turnCounterClockwise(double degrees) {
-        backleft.setTargetPosition(inToTicks(degrees));
-        backright.setTargetPosition(-inToTicks(degrees));
-        frontleft.setTargetPosition(inToTicks(degrees));
-        frontright.setTargetPosition(-inToTicks(degrees));
+    public void turnCounterClockwise(int degrees) {
+        backleft.setTargetPosition(-degToTicks(degrees));
+        backright.setTargetPosition(degToTicks(degrees));
+        frontleft.setTargetPosition(-degToTicks(degrees));
+        frontright.setTargetPosition(degToTicks(degrees));
         Run_to_position();
     }
 
