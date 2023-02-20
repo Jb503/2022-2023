@@ -83,7 +83,7 @@ public class DriveCode extends LinearOpMode {
 
                 armmotor.setPower(armdown - armup);
                 if (gamepad1.left_bumper) {
-                    Claw.setPosition(0.85);
+                    Claw.setPosition(0.78);
                 }
                 if (gamepad1.right_bumper) {
                     Claw.setPosition(1);

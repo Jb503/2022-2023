@@ -221,20 +221,18 @@ public class Auto extends LinearOpMode {
                 else{ //red right
                     if (autoParkPosition == 0) {
                         redRight();
-                        strafeLeft(10);
+                        strafeLeft(15);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         redRight();
-                        strafeRight(6);
+                        strafeRight(12);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         redRight();
-                        strafeRight(15);
-                        sleep(300);
-                        Backward(7);
-                        strafeRight(6);
+                        strafeRight(40);
+                        Backward(4);
                         armRunDown(33);
 
                     } else {
@@ -247,17 +245,18 @@ public class Auto extends LinearOpMode {
                 if(side==0){ //left
                     if (autoParkPosition == 0) {
                         blueLeft();
-                        strafeLeft(25);
+                        strafeLeft(40);
+                        Backward(4);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         blueLeft();
-                        strafeLeft(10);
+                        strafeLeft(12);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         blueLeft();
-                        strafeRight(10);
+                        strafeRight(15);
                         armRunDown(33);
 
                     } else {
@@ -268,21 +267,18 @@ public class Auto extends LinearOpMode {
                 else{ //right
                     if (autoParkPosition == 0) {
                         blueRight();
-                        strafeLeft(8);
+                        strafeLeft(15);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         blueRight();
-                        strafeRight(8);
+                        strafeRight(12);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         blueRight();
-                        strafeRight(12);
-                        sleep(300);
-                        Backward(5);
-                        strafeRight(6);
-                        Backward(6);
+                        strafeRight(40);
+                        Backward(4);
                         armRunDown(33);
 
                     } else {
@@ -377,63 +373,106 @@ public class Auto extends LinearOpMode {
         //cone 1
         Claw.setPosition(0.85);
         Forward(48);
-        strafeRight(15);
+        strafeRight(17);
         armRunUp(33);
         Forward(8);
-        sleep(500);
+        sleep(300);
         Claw.setPosition(1);
-        sleep(200);
+        sleep(100);
         Backward(4);
         //cone 2
         turnCounterClockwise(86);
         Forward (40);
         armRunDown(29);
         Claw.setPosition(0.85);
-        armRunUp(5);
+        armRunUp(6);
         Claw.setPosition(.78);
         Backward(36);
         turnClockwise(95);
         armRunUp(24);
         Forward(5);
-        sleep(700);
+        sleep(300);
         Claw.setPosition(1);
-        sleep(200);
+        sleep(100);
         Backward(4);
     }
     public void blueLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
-        Claw.setPosition(0.85);
-        Forward(40);
-        strafeRight(10);
-        // Arm_Run();
-        Forward(3);
-        sleep(700);
+        Claw.setPosition(0.8);
+        Forward(49);
+        strafeRight(15);
+        armRunUp(33);
+        Forward(5);
+        sleep(300);
         Claw.setPosition(1);
-        sleep(500);
-        Backward(6);
+        sleep(100);
+        Backward(4);
+        //cone 2
+        turnCounterClockwise(88);
+        Forward (40);
+        armRunDown(29);
+        Claw.setPosition(0.85);
+        armRunUp(6);
+        Claw.setPosition(.78);
+        Backward(36);
+        turnClockwise(95);
+        armRunUp(24);
+        Forward(3);
+        sleep(300);
+        Claw.setPosition(1);
+        sleep(100);
+        Backward(4);
     }
     public void redRight(){ //CO, F50, L10, up, F5, CO, B4, TR90*, F37, down, B
-        Claw.setPosition(0.85);
-        Forward(40);
-        strafeLeft(6);
-        // Arm_Run();
-        Forward(3);
-        sleep(700);
+        Claw.setPosition(0.8);
+        Forward(51);
+        strafeLeft(17);
+        armRunUp(33);
+        Forward(8);
+        sleep(300);
         Claw.setPosition(1);
-        sleep(700);
+        sleep(100);
         Backward(4);
-        sleep (500);
+        //cone 2
+        turnClockwise(91);
+        Forward (40);
+        armRunDown(29);
+        Claw.setPosition(0.85);
+        armRunUp(6);
+        Claw.setPosition(.78);
+        Backward(36);
+        turnCounterClockwise(95);
+        armRunUp(24);
+        Forward(3);
+        sleep(300);
+        Claw.setPosition(1);
+        sleep(100);
+        Backward(4);
     }
     public void blueRight(){
-        Claw.setPosition(0.85);
-        Forward(40);
-        strafeLeft(3);
-        // Arm_Run();
-        Forward(4);
-        sleep(700);
+        Claw.setPosition(0.8);
+        Forward(51);
+        strafeLeft(15);
+        armRunUp(33);
+        Forward(5);
+        sleep(200);
         Claw.setPosition(1);
-        sleep(700);
-        Backward(4);
-        sleep(500);
+        sleep(100);
+        Backward(7);
+        //cone 2
+        turnClockwise(92);
+        Forward (41);
+        armRunDown(29);
+        Claw.setPosition(0.85);
+        armRunUp(6);
+        Claw.setPosition(.78);
+        Backward(38);
+        turnCounterClockwise(95);
+        armRunUp(24);
+        Forward(4);
+        sleep(200);
+        Claw.setPosition(1);
+        sleep(100);
+        Backward(7);
     }
 
 
