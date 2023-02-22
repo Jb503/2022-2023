@@ -267,17 +267,16 @@ public class Auto extends LinearOpMode {
                 else{ //right
                     if (autoParkPosition == 0) {
                         blueRight();
-                        strafeLeft(15);
+                        strafeLeft(30);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 1) {
                         blueRight();
-                        strafeRight(12);
                         armRunDown(33);
 
                     } else if (autoParkPosition == 2) {
                         blueRight();
-                        strafeRight(40);
+                        strafeRight(30);
                         Backward(4);
                         armRunDown(33);
 
@@ -371,7 +370,7 @@ public class Auto extends LinearOpMode {
 
     public void redLeft(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         //cone 1
-        Claw.setPosition(0.85);
+        Claw.setPosition(0.77);
         Forward(48);
         strafeRight(17);
         armRunUp(33);
@@ -384,9 +383,9 @@ public class Auto extends LinearOpMode {
         turnCounterClockwise(86);
         Forward (40);
         armRunDown(29);
-        Claw.setPosition(0.85);
+        Claw.setPosition(0.77);
         armRunUp(6);
-        Claw.setPosition(.78);
+        Claw.setPosition(.75);
         Backward(36);
         turnClockwise(95);
         armRunUp(24);
@@ -431,18 +430,18 @@ public class Auto extends LinearOpMode {
         sleep(300);
         Claw.setPosition(1);
         sleep(100);
-        Backward(4);
+        Backward(3);
         //cone 2
-        turnClockwise(91);
+        turnClockwise(89);
         Forward (40);
         armRunDown(29);
-        Claw.setPosition(0.85);
+        Claw.setPosition(0.8);
         armRunUp(6);
         Claw.setPosition(.78);
         Backward(36);
         turnCounterClockwise(95);
         armRunUp(24);
-        Forward(3);
+        Forward(4);
         sleep(300);
         Claw.setPosition(1);
         sleep(100);
@@ -453,26 +452,27 @@ public class Auto extends LinearOpMode {
         Forward(51);
         strafeLeft(15);
         armRunUp(33);
-        Forward(5);
+        Forward(5.5);
         sleep(200);
         Claw.setPosition(1);
         sleep(100);
-        Backward(7);
+        Backward(8);
         //cone 2
-        turnClockwise(92);
+        turnClockwise(95);
         Forward (41);
         armRunDown(29);
         Claw.setPosition(0.85);
         armRunUp(6);
-        Claw.setPosition(.78);
-        Backward(38);
-        turnCounterClockwise(95);
+        Claw.setPosition(.77);
+        Backward(30);
+        turnCounterClockwise(140);
         armRunUp(24);
-        Forward(4);
+        Forward(3);
         sleep(200);
         Claw.setPosition(1);
         sleep(100);
-        Backward(7);
+        Backward(9);
+        turnClockwise(45);
     }
 
 
