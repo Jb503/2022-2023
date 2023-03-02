@@ -218,20 +218,20 @@ public class Remote extends LinearOpMode {
                     if (autoParkPosition == 0) {
                         medJunct();
                         strafeRight(40);
-                        armRunDown(21);
                         Forward(25);
+                        armRunDown(21);
 
                     } else if (autoParkPosition == 1) {
                         medJunct();
                         strafeRight(14);
-                        armRunDown(21);
                         Forward(25);
+                        armRunDown(21);
 
                     } else if (autoParkPosition == 2) {
                         medJunct();
                         strafeLeft(15);
-                        armRunDown(21);
                         Forward(25);
+                        armRunDown(21);
 
                     } else {
                         telemetry.update();
@@ -399,8 +399,8 @@ public class Remote extends LinearOpMode {
         Claw.setPosition(0.77);
         Forward(60);
         Backward(5);
-        turnClockwise(180);
-        strafeLeft(17);
+        turnClockwise(178);
+        strafeLeft(18);
         armRunUp(23);
         Forward(5);
         sleep(200);
@@ -409,7 +409,7 @@ public class Remote extends LinearOpMode {
         Backward(5);
         //cone 2
         turnClockwise(85);
-        strafeLeft(1);
+        strafeLeft(1.5);
         Forward (42);
         armRunDown(19);
         Claw.setPosition(0.77);
@@ -417,13 +417,15 @@ public class Remote extends LinearOpMode {
         Claw.setPosition(.75);
         Backward(39);
         turnCounterClockwise(95);
+        Backward(2);
+        strafeLeft(2);
         armRunUp(14);
-        Forward(4);
+        Forward(5);
         sleep(200);
         Claw.setPosition(1);
         sleep(100);
-        Backward(6);
-        turnCounterClockwise(3);
+        Backward(7);
+        turnCounterClockwise(6);
     }
     public void smallJunct(){ //CO, F50, R10, up, F5, CO, B4, TL90*, F37, down, B37, TR90*, F5, park
         //cone 1
